@@ -1,0 +1,3 @@
+No-GPU mode
+Inside container on  slurm-static-1-33  at  Fri Mar 6 13:16:51 UTC 2026
+COMMAND: accelerate launch  --cpu --num_machines=1 --num_processes=1 /IDL_master/IDL_Master/accelerate_scripts/mt5small-train_cpu.py
