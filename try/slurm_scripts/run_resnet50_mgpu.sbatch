@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=mt5small-mgpu
+#SBATCH --job-name=resnet50
 #SBATCH --time=00:40:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -31,6 +31,7 @@ apptainer exec --nv --cleanenv \
   /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
   bash -lc "
     echo 'Inside container on ' \$(hostname) ' at ' \$(date)
-    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/mt5small-train_mgpu.py'
-    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/mt5small-train_mgpu.py
+    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/resnet50-train_mgpu.py'
+    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/resnet50-train_mgpu.py
   "
+

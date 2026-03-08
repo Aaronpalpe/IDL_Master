@@ -1,0 +1,114 @@
+2026-03-08 20:01:46,891 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 237, in <module>
+[rank0]:     main()
+[rank0]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 46, in main
+[rank0]:     tokenizer = AutoTokenizer.from_pretrained(
+[rank0]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank0]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1849, in __getattribute__
+[rank0]:     requires_backends(cls, cls._backends)
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1837, in requires_backends
+[rank0]:     raise ImportError("".join(failed))
+[rank0]: ImportError: 
+[rank0]: T5Tokenizer requires the SentencePiece library but it was not found in your environment. Checkout the instructions on the
+[rank0]: installation page of its repo: https://github.com/google/sentencepiece#installation and follow the ones
+[rank0]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank0]:[W308 20:01:55.419332429 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 237, in <module>
+[rank3]:     main()
+[rank3]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 46, in main
+[rank3]:     tokenizer = AutoTokenizer.from_pretrained(
+[rank3]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank3]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1849, in __getattribute__
+[rank3]:     requires_backends(cls, cls._backends)
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1837, in requires_backends
+[rank3]:     raise ImportError("".join(failed))
+[rank3]: ImportError: 
+[rank3]: T5Tokenizer requires the SentencePiece library but it was not found in your environment. Checkout the instructions on the
+[rank3]: installation page of its repo: https://github.com/google/sentencepiece#installation and follow the ones
+[rank3]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 237, in <module>
+[rank1]:     main()
+[rank1]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 46, in main
+[rank1]:     tokenizer = AutoTokenizer.from_pretrained(
+[rank1]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank1]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1849, in __getattribute__
+[rank1]:     requires_backends(cls, cls._backends)
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1837, in requires_backends
+[rank1]:     raise ImportError("".join(failed))
+[rank1]: ImportError: 
+[rank1]: T5Tokenizer requires the SentencePiece library but it was not found in your environment. Checkout the instructions on the
+[rank1]: installation page of its repo: https://github.com/google/sentencepiece#installation and follow the ones
+[rank1]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 237, in <module>
+[rank2]:     main()
+[rank2]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 46, in main
+[rank2]:     tokenizer = AutoTokenizer.from_pretrained(
+[rank2]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank2]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1849, in __getattribute__
+[rank2]:     requires_backends(cls, cls._backends)
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/utils/import_utils.py", line 1837, in requires_backends
+[rank2]:     raise ImportError("".join(failed))
+[rank2]: ImportError: 
+[rank2]: T5Tokenizer requires the SentencePiece library but it was not found in your environment. Checkout the instructions on the
+[rank2]: installation page of its repo: https://github.com/google/sentencepiece#installation and follow the ones
+[rank2]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+W0308 20:01:56.670000 2311 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2357 closing signal SIGTERM
+W0308 20:01:56.674000 2311 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2358 closing signal SIGTERM
+W0308 20:01:56.677000 2311 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2359 closing signal SIGTERM
+E0308 20:01:56.995000 2311 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 2356) of binary: /opt/conda/bin/python
+Traceback (most recent call last):
+  File "/opt/conda/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/accelerate_cli.py", line 48, in main
+    args.func(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1185, in launch_command
+    multi_gpu_launcher(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 810, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_20:01:56
+  host      : slurm-static-1-56.europe-west1-b.c.scc-cloud-377009.internal
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2356)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

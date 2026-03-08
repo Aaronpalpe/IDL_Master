@@ -14,10 +14,11 @@ else
   PARTITION="${PARTITION_DEFAULT}"
 fi
 
-echo "Submitting YOLOv8n GPU with NUM_GPUs=${NUM_PROCESSES} to partition=${PARTITION}"
+echo "Submitting with NUM_GPUs=${NUM_PROCESSES} to partition=${PARTITION}"
 
 sbatch \
   --partition="${PARTITION}" \
   --gres="gpu:${NUM_PROCESSES}" \
   --export=ALL,NUM_PROCESSES="${NUM_PROCESSES}" \
-  run_yolov8_inf_gpu.sbatch
+  run_resnet50_mgpu.sbatch
+

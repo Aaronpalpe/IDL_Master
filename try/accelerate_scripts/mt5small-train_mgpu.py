@@ -42,7 +42,11 @@ def main():
     # -------------------------------
     # Tokenizer & model
     # -------------------------------
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    # tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name,
+        use_fast=False   # <--- evita tiktoken / protobuf
+    )
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
     optimizer = optim.AdamW(model.parameters(), lr=lr)
 

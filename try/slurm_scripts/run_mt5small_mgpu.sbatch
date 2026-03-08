@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=mt5small-gpu
+#SBATCH --job-name=mt5small-mgpu
 #SBATCH --time=00:40:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -10,6 +10,7 @@
 
 set -euo pipefail
 
+# Default value if not provided from outside
 NUM_PROCESSES=${NUM_PROCESSES:-1}
 
 echo "NUM_PROCESSES=${NUM_PROCESSES}"
@@ -30,6 +31,6 @@ apptainer exec --nv --cleanenv \
   /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
   bash -lc "
     echo 'Inside container on ' \$(hostname) ' at ' \$(date)
-    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/mt5small-train_gpu.py'
-    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/mt5small-train_gpu.py
+    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/mt5small-train_mgpu.py'
+    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/mt5small-train_mgpu.py
   "

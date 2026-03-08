@@ -1,0 +1,282 @@
+2026-03-08 19:44:16,539 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1587, in extract_vocab_merges_from_model
+[rank0]:     from tiktoken.load import load_tiktoken_bpe
+[rank0]: ModuleNotFoundError: No module named 'tiktoken'
+
+[rank0]: During handling of the above exception, another exception occurred:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1730, in convert_slow_tokenizer
+[rank0]:     ).converted()
+[rank0]:       ^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1624, in converted
+[rank0]:     tokenizer = self.tokenizer()
+[rank0]:                 ^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1617, in tokenizer
+[rank0]:     vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+[rank0]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1589, in extract_vocab_merges_from_model
+[rank0]:     raise ValueError(
+[rank0]: ValueError: `tiktoken` is required to read a `tiktoken` file. Install it with `pip install tiktoken`.
+
+[rank0]: During handling of the above exception, another exception occurred:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+[rank0]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank0]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/t5/tokenization_t5_fast.py", line 119, in __init__
+[rank0]:     super().__init__(
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 139, in __init__
+[rank0]:     fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+[rank0]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1732, in convert_slow_tokenizer
+[rank0]:     raise ValueError(
+[rank0]: ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast converters: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+
+[rank0]: During handling of the above exception, another exception occurred:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 233, in <module>
+[rank0]:     main()
+[rank0]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 45, in main
+[rank0]:     tokenizer = AutoTokenizer.from_pretrained(model_name)
+[rank0]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank0]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+[rank0]:     return cls._from_pretrained(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2303, in _from_pretrained
+[rank0]:     except import_protobuf_decode_error():
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 87, in import_protobuf_decode_error
+[rank0]:     raise ImportError(PROTOBUF_IMPORT_ERROR.format(error_message))
+[rank0]: ImportError: 
+[rank0]:  requires the protobuf library but it was not found in your environment. Checkout the instructions on the
+[rank0]: installation page of its repo: https://github.com/protocolbuffers/protobuf/tree/master/python#installation and follow the ones
+[rank0]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1587, in extract_vocab_merges_from_model
+[rank3]:     from tiktoken.load import load_tiktoken_bpe
+[rank3]: ModuleNotFoundError: No module named 'tiktoken'
+
+[rank3]: During handling of the above exception, another exception occurred:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1730, in convert_slow_tokenizer
+[rank3]:     ).converted()
+[rank3]:       ^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1624, in converted
+[rank3]:     tokenizer = self.tokenizer()
+[rank3]:                 ^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1617, in tokenizer
+[rank3]:     vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+[rank3]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1589, in extract_vocab_merges_from_model
+[rank3]:     raise ValueError(
+[rank3]: ValueError: `tiktoken` is required to read a `tiktoken` file. Install it with `pip install tiktoken`.
+
+[rank3]: During handling of the above exception, another exception occurred:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+[rank3]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank3]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/t5/tokenization_t5_fast.py", line 119, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 139, in __init__
+[rank3]:     fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+[rank3]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1732, in convert_slow_tokenizer
+[rank3]:     raise ValueError(
+[rank3]: ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast converters: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+
+[rank3]: During handling of the above exception, another exception occurred:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 233, in <module>
+[rank3]:     main()
+[rank3]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 45, in main
+[rank3]:     tokenizer = AutoTokenizer.from_pretrained(model_name)
+[rank3]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank3]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+[rank3]:     return cls._from_pretrained(
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2303, in _from_pretrained
+[rank3]:     except import_protobuf_decode_error():
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 87, in import_protobuf_decode_error
+[rank3]:     raise ImportError(PROTOBUF_IMPORT_ERROR.format(error_message))
+[rank3]: ImportError: 
+[rank3]:  requires the protobuf library but it was not found in your environment. Checkout the instructions on the
+[rank3]: installation page of its repo: https://github.com/protocolbuffers/protobuf/tree/master/python#installation and follow the ones
+[rank3]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1587, in extract_vocab_merges_from_model
+[rank1]:     from tiktoken.load import load_tiktoken_bpe
+[rank1]: ModuleNotFoundError: No module named 'tiktoken'
+
+[rank1]: During handling of the above exception, another exception occurred:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1730, in convert_slow_tokenizer
+[rank1]:     ).converted()
+[rank1]:       ^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1624, in converted
+[rank1]:     tokenizer = self.tokenizer()
+[rank1]:                 ^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1617, in tokenizer
+[rank1]:     vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+[rank1]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1589, in extract_vocab_merges_from_model
+[rank1]:     raise ValueError(
+[rank1]: ValueError: `tiktoken` is required to read a `tiktoken` file. Install it with `pip install tiktoken`.
+
+[rank1]: During handling of the above exception, another exception occurred:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+[rank1]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank1]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/t5/tokenization_t5_fast.py", line 119, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 139, in __init__
+[rank1]:     fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+[rank1]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1732, in convert_slow_tokenizer
+[rank1]:     raise ValueError(
+[rank1]: ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast converters: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+
+[rank1]: During handling of the above exception, another exception occurred:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 233, in <module>
+[rank1]:     main()
+[rank1]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 45, in main
+[rank1]:     tokenizer = AutoTokenizer.from_pretrained(model_name)
+[rank1]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank1]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+[rank1]:     return cls._from_pretrained(
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2303, in _from_pretrained
+[rank1]:     except import_protobuf_decode_error():
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 87, in import_protobuf_decode_error
+[rank1]:     raise ImportError(PROTOBUF_IMPORT_ERROR.format(error_message))
+[rank1]: ImportError: 
+[rank1]:  requires the protobuf library but it was not found in your environment. Checkout the instructions on the
+[rank1]: installation page of its repo: https://github.com/protocolbuffers/protobuf/tree/master/python#installation and follow the ones
+[rank1]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1587, in extract_vocab_merges_from_model
+[rank2]:     from tiktoken.load import load_tiktoken_bpe
+[rank2]: ModuleNotFoundError: No module named 'tiktoken'
+
+[rank2]: During handling of the above exception, another exception occurred:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1730, in convert_slow_tokenizer
+[rank2]:     ).converted()
+[rank2]:       ^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1624, in converted
+[rank2]:     tokenizer = self.tokenizer()
+[rank2]:                 ^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1617, in tokenizer
+[rank2]:     vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+[rank2]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1589, in extract_vocab_merges_from_model
+[rank2]:     raise ValueError(
+[rank2]: ValueError: `tiktoken` is required to read a `tiktoken` file. Install it with `pip install tiktoken`.
+
+[rank2]: During handling of the above exception, another exception occurred:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+[rank2]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank2]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/t5/tokenization_t5_fast.py", line 119, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 139, in __init__
+[rank2]:     fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+[rank2]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/convert_slow_tokenizer.py", line 1732, in convert_slow_tokenizer
+[rank2]:     raise ValueError(
+[rank2]: ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast converters: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+
+[rank2]: During handling of the above exception, another exception occurred:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 233, in <module>
+[rank2]:     main()
+[rank2]:   File "/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py", line 45, in main
+[rank2]:     tokenizer = AutoTokenizer.from_pretrained(model_name)
+[rank2]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 973, in from_pretrained
+[rank2]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+[rank2]:     return cls._from_pretrained(
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2303, in _from_pretrained
+[rank2]:     except import_protobuf_decode_error():
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/opt/conda/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 87, in import_protobuf_decode_error
+[rank2]:     raise ImportError(PROTOBUF_IMPORT_ERROR.format(error_message))
+[rank2]: ImportError: 
+[rank2]:  requires the protobuf library but it was not found in your environment. Checkout the instructions on the
+[rank2]: installation page of its repo: https://github.com/protocolbuffers/protobuf/tree/master/python#installation and follow the ones
+[rank2]: that match your environment. Please note that you may need to restart your runtime after installation.
+
+[rank0]:[W308 19:44:25.199432529 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0308 19:44:27.422000 2299 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2371 closing signal SIGTERM
+W0308 19:44:27.427000 2299 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2372 closing signal SIGTERM
+W0308 19:44:27.430000 2299 site-packages/intel_extension_for_pytorch/utils/_logger.py:72] Sending process 2373 closing signal SIGTERM
+E0308 19:44:27.748000 2299 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 2370) of binary: /opt/conda/bin/python
+Traceback (most recent call last):
+  File "/opt/conda/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/accelerate_cli.py", line 48, in main
+    args.func(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1185, in launch_command
+    multi_gpu_launcher(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 810, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/aaronpp/accelerate_scripts/mt5small-train_mgpu.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_19:44:27
+  host      : slurm-static-1-52.europe-west1-b.c.scc-cloud-377009.internal
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2370)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
