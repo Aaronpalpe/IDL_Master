@@ -1,3 +1,0 @@
-No-GPU mode
-Inside container on  slurm-static-1-36  at  Wed Mar 11 11:39:34 UTC 2026
-COMMAND: accelerate launch  --cpu --num_machines=1 --num_processes=1 /accelerate_scripts/vit-train_cpu.py

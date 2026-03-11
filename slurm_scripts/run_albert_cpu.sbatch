@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=vit
+#SBATCH --job-name=albert
 #SBATCH --time=00:40:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -19,6 +19,6 @@ apptainer exec --cleanenv \
   /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
   bash -lc "
     echo 'Inside container on ' \$(hostname) ' at ' \$(date)
-    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/vit-train_cpu.py'
-    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/vit-train_cpu.py
+    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/albert-inf_cpu.py'
+    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/albert-inf_cpu.py
   "

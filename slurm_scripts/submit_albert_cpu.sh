@@ -10,4 +10,4 @@ echo "Submitting to partition=${PARTITION}"
 
 sbatch \
   --partition="${PARTITION}" \
-  run_smollm2_cpu.sbatch
+  run_albert_cpu.sbatch

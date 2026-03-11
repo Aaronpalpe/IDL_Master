@@ -1,13 +1,13 @@
 from accelerate import Accelerator, ProfileKwargs
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AlbertModel, AlbertTokenizer
 
-# Load SmolLM2 model and tokenizer
-model_name = "HuggingFaceTB/SmolLM2-135M"
-model = AutoModelForCausalLM.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+# Load ALBERT model and tokenizer
+model_name = "albert/albert-base-v2"
+model = AlbertModel.from_pretrained(model_name)
+tokenizer = AlbertTokenizer.from_pretrained(model_name)
 
-# Create a large batch of random token sequences
+# Create a large batch of random long sentences (batch size 128, sequence length 512)
 batch_size = 128
 seq_length = 512
 

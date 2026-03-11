@@ -20,4 +20,4 @@ sbatch \
   --partition="${PARTITION}" \
   --gres="gpu:${NUM_PROCESSES}" \
   --export=ALL,NUM_PROCESSES="${NUM_PROCESSES}" \
-  run_vit_mgpu.sbatch
+  run_mobilevit_mgpu.sbatch

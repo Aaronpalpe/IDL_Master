@@ -1,23 +1,23 @@
 from accelerate import Accelerator, ProfileKwargs
 import torch
-from transformers import ViTForImageClassification
 import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
+from transformers import MobileViTForImageClassification
 
-# Load ViT model
-model_name = "google/vit-base-patch16-224-in21k"
-model = ViTForImageClassification.from_pretrained(model_name, num_labels=10)
+# Load MobileViT model
+model_name = "apple/mobilevit-small"
+model = MobileViTForImageClassification.from_pretrained(model_name, num_labels=10, ignore_mismatched_sizes=True)
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.00001)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# Synthetic dataset: random images (batch size, 3 channels, 224x224)
+# Synthetic dataset - MobileViT expects 256x256 images
 batch_size = 16
-seq_length = 224
-input_images = torch.rand((batch_size * 4, 3, 224, 224))
-labels = torch.randint(0, 10, (batch_size * 4,))
+seq_length = 256
+input_images = torch.rand((batch_size, 3, seq_length, seq_length))
+labels = torch.randint(0, 10, (batch_size,))
 
 dataset = TensorDataset(input_images, labels)
 dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
@@ -34,7 +34,9 @@ accelerator = Accelerator(cpu=False, kwargs_handlers=[profile_kwargs])
 # Prepare the model, optimizer, and data loader for GPU execution
 model, optimizer, dataloader = accelerator.prepare(model, optimizer, dataloader)
 
+# Move model to training mode
 model.train()
+
 device = accelerator.device
 
 # Training loop

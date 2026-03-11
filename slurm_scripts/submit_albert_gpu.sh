@@ -20,4 +20,4 @@ sbatch \
   --partition="${PARTITION}" \
   --gres="gpu:${NUM_PROCESSES}" \
   --export=ALL,NUM_PROCESSES="${NUM_PROCESSES}" \
-  run_vit_mgpu_stats.sbatch
+  run_albert_gpu.sbatch

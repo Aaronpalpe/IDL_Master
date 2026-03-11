@@ -1,8 +1,0 @@
-No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
-2026-03-11 11:28:50,483 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-	`--num_cpu_threads_per_process` was set to `2` to improve out-of-box performance when training on CPUs
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-/usr/bin/bash: line 3:  2113 Killed                  accelerate launch --cpu --num_machines=1 --num_processes=1 /home/aaronpp/accelerate_scripts/smollm2-inf_cpu.py
-slurmstepd: error: Detected 2 oom-kill event(s) in StepId=2176.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.

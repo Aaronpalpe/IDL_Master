@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smollm2
+#SBATCH --job-name=mobilevit
 #SBATCH --time=00:40:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -31,6 +31,6 @@ apptainer exec --nv --cleanenv \
   /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
   bash -lc "
     echo 'Inside container on ' \$(hostname) ' at ' \$(date)
-    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/smollm2-inf_gpu.py'
-    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/smollm2-inf_gpu.py
+    echo 'COMMAND: accelerate launch ' ${ACCELERATE_ARGS} '/accelerate_scripts/mobilevit-train_mgpu_stats2.py'
+    accelerate launch ${ACCELERATE_ARGS} ${HOME}/accelerate_scripts/mobilevit-train_mgpu_stats2.py
   "

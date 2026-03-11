@@ -1,23 +1,23 @@
 from accelerate import Accelerator, ProfileKwargs
 import torch
-from transformers import ViTForImageClassification
 import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
+from transformers import MobileViTForImageClassification
 
-# Load ViT model
-model_name = "google/vit-base-patch16-224-in21k"
-model = ViTForImageClassification.from_pretrained(model_name, num_labels=10)
+# Load MobileViT model
+model_name = "apple/mobilevit-small"
+model = MobileViTForImageClassification.from_pretrained(model_name, num_labels=10, ignore_mismatched_sizes=True)
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.00001)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# Synthetic dataset: random images (batch size, 3 channels, 224x224)
+# Synthetic dataset (CPU tensors) - MobileViT expects 256x256 images
 batch_size = 1
 num_samples = 8
 
-input_images = torch.rand((num_samples, 3, 224, 224), device="cpu")
+input_images = torch.rand((num_samples, 3, 256, 256), device="cpu")
 labels = torch.randint(0, 10, (num_samples,), device="cpu")
 
 dataset = TensorDataset(input_images, labels)

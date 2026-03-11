@@ -1,41 +1,11 @@
-import os, time, socket, platform
+import os, time, socket
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 
-from transformers import ViTForImageClassification
+from transformers import MobileViTForImageClassification
 from accelerate import Accelerator, ProfileKwargs
-
-
-# -------- CPU RSS helpers (best effort) --------
-def get_rss_bytes():
-    """Current process RSS in bytes (best effort)."""
-    try:
-        import psutil  # type: ignore
-        return psutil.Process(os.getpid()).memory_info().rss
-    except Exception:
-        pass
-    try:
-        import resource
-        usage = resource.getrusage(resource.RUSAGE_SELF)
-        if platform.system().lower() == "linux":
-            return int(usage.ru_maxrss * 1024)
-        return int(usage.ru_maxrss)
-    except Exception:
-        return None
-
-
-def format_bytes(n):
-    if n is None:
-        return "n/a"
-    units = ["B", "KiB", "MiB", "GiB", "TiB"]
-    x = float(n)
-    for u in units:
-        if x < 1024.0 or u == units[-1]:
-            return f"{x:.2f} {u}"
-        x /= 1024.0
-    return f"{x:.2f} B"
 
 
 class RandomImageDataset(Dataset):
@@ -47,7 +17,8 @@ class RandomImageDataset(Dataset):
         return self.length
 
     def __getitem__(self, idx):
-        x = torch.rand(3, 224, 224, dtype=torch.float32)
+        # MobileViT expects 256x256 images
+        x = torch.rand(3, 256, 256, dtype=torch.float32)
         y = torch.randint(0, self.num_classes, (1,), dtype=torch.long).item()
         return x, y
 
@@ -66,15 +37,9 @@ def main():
     local_rank = accelerator.local_process_index
     host = socket.gethostname()
 
-    # ---- track memory baseline ----
-    cpu_rss_start = get_rss_bytes()
-    cpu_rss_peak = cpu_rss_start
-
-    if torch.cuda.is_available():
-        torch.cuda.reset_peak_memory_stats()
-
-    model_name = "google/vit-base-patch16-224-in21k"
-    model = ViTForImageClassification.from_pretrained(model_name, num_labels=10)
+    model = MobileViTForImageClassification.from_pretrained(
+        "apple/mobilevit-small", num_labels=10, ignore_mismatched_sizes=True
+    )
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
@@ -96,7 +61,7 @@ def main():
     model, optimizer, dataloader = accelerator.prepare(model, optimizer, dataloader)
     model.train()
 
-    # Warmup
+    # Warmup (optional)
     warmup_steps = 5
     it = iter(dataloader)
     for _ in range(warmup_steps):
@@ -109,10 +74,6 @@ def main():
         loss = criterion(outputs, targets)
         accelerator.backward(loss)
         optimizer.step()
-
-        rss = get_rss_bytes()
-        if rss is not None and (cpu_rss_peak is None or rss > cpu_rss_peak):
-            cpu_rss_peak = rss
 
     accelerator.wait_for_everyone()
     if torch.cuda.is_available():
@@ -138,42 +99,58 @@ def main():
                 running_loss += loss.item()
                 total_seen_local += inputs.size(0)
 
-                rss = get_rss_bytes()
-                if rss is not None and (cpu_rss_peak is None or rss > cpu_rss_peak):
-                    cpu_rss_peak = rss
-
+            # Reduce loss across ranks for consistent logging (rank0 prints)
             avg_loss = torch.tensor(running_loss / len(dataloader), device=device)
             avg_loss = accelerator.reduce(avg_loss, reduction="mean").item()
             if accelerator.is_main_process:
-                print(f"Epoch {epoch+1}, Loss: {avg_loss:.4f}")
+                print(f"Epoch {epoch+1}, Loss: {avg_loss:.4f}", flush=True)
 
     accelerator.wait_for_everyone()
     if torch.cuda.is_available():
         torch.cuda.synchronize()
     t1 = time.time()
 
-    global_seen = total_seen_local * world
+    # Global images processed (safe without gather_object)
+    global_seen = int(
+        accelerator.reduce(torch.tensor(total_seen_local, device=device), reduction="sum").item()
+    )
 
-    # ---- Memory stats ----
-    gpu_alloc = gpu_peak = None
-    if torch.cuda.is_available():
-        gpu_alloc = torch.cuda.memory_allocated(device)
-        gpu_peak = torch.cuda.max_memory_allocated(device)
+    # Optional: per-rank throughput (local) and global throughput
+    local_throughput = total_seen_local / (t1 - t0) if (t1 - t0) > 0 else float("nan")
+    global_throughput = global_seen / (t1 - t0) if (t1 - t0) > 0 else float("nan")
 
+    # Print summary from rank0
     if accelerator.is_main_process:
-        print(f"\n{'='*60}")
-        print(f"Done. world_size={world} global_images={global_seen} "
-              f"time={t1-t0:.2f}s throughput={global_seen/(t1-t0):.1f} img/s")
-        print(f"[rank={rank} host={host} local_rank={local_rank}]")
-        print(f"CPU RSS start : {format_bytes(cpu_rss_start)}")
-        print(f"CPU RSS peak  : {format_bytes(cpu_rss_peak)}")
-        if gpu_alloc is not None:
-            print(f"GPU mem alloc : {format_bytes(gpu_alloc)}")
-            print(f"GPU mem peak  : {format_bytes(gpu_peak)}")
-        print(f"{'='*60}\n")
-        print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+        print(
+            f"\nDone. world_size={world} global_images={global_seen} time={t1-t0:.2f}s "
+            f"global_throughput={global_throughput:.1f} img/s\n",
+            flush=True
+        )
+
+    # ---- Print each rank's profiler table (serialized to avoid interleaving) ----
+    accelerator.wait_for_everyone()
+    for r in range(world):
+        if rank == r:
+            gpu_name = None
+            if torch.cuda.is_available():
+                try:
+                    gpu_name = torch.cuda.get_device_name(torch.cuda.current_device())
+                except Exception:
+                    gpu_name = None
+
+            print("=" * 70, flush=True)
+            print(
+                f"[RANK {rank}/{world}] host={host} local_rank={local_rank} device={device} gpu={gpu_name} "
+                f"local_images={total_seen_local} local_throughput={local_throughput:.1f} img/s",
+                flush=True
+            )
+            print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=15), flush=True)
+            print("=" * 70, flush=True)
+
+        accelerator.wait_for_everyone()
 
     accelerator.end_training()
+
 
 if __name__ == "__main__":
     main()

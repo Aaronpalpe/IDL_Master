@@ -10,4 +10,4 @@ echo "Submitting to partition=${PARTITION}"
 
 sbatch \
   --partition="${PARTITION}" \
-  run_vit_cpu.sbatch
+  run_mobilevit_cpu.sbatch

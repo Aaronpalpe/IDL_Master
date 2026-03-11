@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 
-from transformers import ViTForImageClassification
+from transformers import MobileViTForImageClassification
 from accelerate import Accelerator
 
 class RandomImageDataset(Dataset):
@@ -16,15 +16,18 @@ class RandomImageDataset(Dataset):
         return self.length
 
     def __getitem__(self, idx):
-        x = torch.rand(3, 224, 224, dtype=torch.float32)
+        # CPU tensors generated on the fly (small memory footprint)
+        # MobileViT expects 256x256 images
+        x = torch.rand(3, 256, 256, dtype=torch.float32)
         y = torch.randint(0, self.num_classes, (1,), dtype=torch.long).item()
         return x, y
 
 def main():
     accelerator = Accelerator()
 
-    model_name = "google/vit-base-patch16-224-in21k"
-    model = ViTForImageClassification.from_pretrained(model_name, num_labels=10)
+    model = MobileViTForImageClassification.from_pretrained(
+        "apple/mobilevit-small", num_labels=10, ignore_mismatched_sizes=True
+    )
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
