@@ -1,0 +1,27 @@
+No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+2026-03-11 11:06:22,651 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+	`--num_cpu_threads_per_process` was set to `2` to improve out-of-box performance when training on CPUs
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+/opt/conda/bin/python: can't open file '/home/ginescarrilloi/accelerate_scripts/resnet50-train_cpu.py': [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "/opt/conda/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/accelerate_cli.py", line 48, in main
+    args.func(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1194, in launch_command
+    simple_launcher(args)
+  File "/opt/conda/lib/python3.12/site-packages/accelerate/commands/launch.py", line 780, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/opt/conda/bin/python', '/home/ginescarrilloi/accelerate_scripts/resnet50-train_cpu.py']' returned non-zero exit status 2.
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
+Uncaught exception in compile_worker subprocess
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.12/site-packages/torch/_inductor/compile_worker/__main__.py", line 38, in main
+    pre_fork_setup()
+  File "/opt/conda/lib/python3.12/site-packages/torch/_inductor/async_compile.py", line 62, in pre_fork_setup
+  File "/opt/conda/lib/python3.12/site-packages/triton/compiler/compiler.py", line 156, in triton_key
+OSError: [Errno 107] Transport endpoint is not connected

@@ -1,0 +1,60 @@
+NUM_PROCESSES=1
+CUDA_VISIBLE_DEVICES=0
+Single-GPU mode (stats + gradient accumulation)
+Wed Mar 11 19:11:04 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |
+| N/A   74C    P0             32W /   70W |       1MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Inside container on  slurm-static-1-42  at  Wed Mar 11 19:11:05 UTC 2026
+COMMAND: accelerate launch  --num_machines=1 --num_processes 1 /accelerate_scripts/mobilevit-train_mgpu_stats_gradacc.py
+Epoch 1, Loss: 2.3069
+Epoch 2, Loss: 2.3043
+Epoch 3, Loss: 2.3044
+
+Done. world_size=1 global_images=12288 time=150.75s global_throughput=81.5 img/s gradient_accumulation_steps=4
+
+======================================================================
+[RANK 0/1] host=slurm-static-1-42 local_rank=0 device=cuda gpu=Tesla T4
+  local_images=12288 local_throughput=81.5 img/s
+  CPU RSS: start=538.53 MiB  end=2.99 GiB  peak~=1.75 GiB
+  GPU mem: alloc=122.60 MiB  reserved=6.35 GiB  peak_alloc=5.81 GiB  peak_reserved=6.35 GiB
+----------------------------------------------------------------------
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                   volta_sgemm_64x64_tn         0.00%       0.000us         0.00%       0.000us       0.000us       14.028s        10.05%       14.028s     702.519us         19968  
+void cudnn::bn_bw_1C11_kernel_new<float, float, floa...         0.00%       0.000us         0.00%       0.000us       0.000us       13.579s         9.73%       13.579s       2.526ms          5376  
+void cudnn::bn_fw_tr_1C11_kernel_NCHW<float, float, ...         0.00%       0.000us         0.00%       0.000us       0.000us        8.065s         5.78%        8.065s       1.500ms          5376  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        7.290s         5.22%        7.290s     612.421us         11904  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us        7.247s         5.19%        7.247s       4.718ms          1536  
+                                   volta_sgemm_64x64_nn         0.00%       0.000us         0.00%       0.000us       0.000us        6.789s         4.86%        6.789s     411.160us         16512  
+                                  volta_sgemm_128x64_nt         0.00%       0.000us         0.00%       0.000us       0.000us        6.722s         4.82%        6.722s     500.115us         13440  
+                                   volta_sgemm_64x64_nt         0.00%       0.000us         0.00%       0.000us       0.000us        6.141s         4.40%        6.141s     319.859us         19200  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us        6.098s         4.37%        6.098s       2.269ms          2688  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us        5.574s         3.99%        5.574s       4.838ms          1152  
+                                  volta_sgemm_128x64_nn         0.00%       0.000us         0.00%       0.000us       0.000us        5.275s         3.78%        5.275s     858.483us          6144  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us        5.109s         3.66%        5.109s       1.901ms          2688  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        5.090s         3.65%        5.090s     389.842us         13056  
+void wgrad_alg0_engine<float, 128, 6, 7, 3, 3, 5, fa...         0.00%       0.000us         0.00%       0.000us       0.000us        3.720s         2.67%        3.720s       3.230ms          1152  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        3.716s         2.66%        3.716s     100.807us         36864  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 121.666s
+Self CUDA time total: 139.560s
+
+======================================================================

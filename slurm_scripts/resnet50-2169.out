@@ -1,0 +1,3 @@
+No-GPU mode
+Inside container on  slurm-static-1-33  at  Wed Mar 11 11:06:04 UTC 2026
+COMMAND: accelerate launch  --cpu --num_machines=1 --num_processes=1 /accelerate_scripts/resnet50-train_cpu.py
