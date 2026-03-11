@@ -1,0 +1,36 @@
+No-GPU mode
+Inside container on  slurm-static-1-40  at  Wed Mar 11 19:37:05 UTC 2026
+COMMAND: accelerate launch  --cpu --num_machines=1 --num_processes=1 /accelerate_scripts/mobilevit-train_cpu_stats.py
+Epoch 1, Loss: 2.2953
+Epoch 2, Loss: 2.1085
+Epoch 3, Loss: 1.8453
+
+Done. world_size=1 global_images=24 time=16.42s global_throughput=1.5 img/s
+
+======================================================================
+[RANK 0/1] device=cpu
+  local_images=24 local_throughput=1.5 img/s
+  CPU RSS: start=567.02 MiB  end=4.46 GiB  peak~=4.39 GiB
+----------------------------------------------------------------------
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+autograd::engine::evaluate_function: ConvolutionBack...         0.24%      23.891ms        22.21%        2.207s       2.627ms           840  
+                                   ConvolutionBackward0         0.12%      11.527ms        21.88%        2.174s       2.588ms           840  
+                             aten::convolution_backward        20.56%        2.043s        21.77%        2.163s       2.575ms           840  
+                                           aten::conv2d         0.08%       7.938ms        17.12%        1.701s       2.025ms           840  
+                                      aten::convolution         0.30%      29.864ms        17.04%        1.693s       2.016ms           840  
+                                     aten::_convolution         0.15%      14.968ms        16.74%        1.663s       1.980ms           840  
+                               aten::mkldnn_convolution        15.94%        1.584s        16.16%        1.606s       2.230ms           720  
+                               Optimizer.step#Adam.step         3.27%     324.874ms        12.56%        1.248s      52.012ms            24  
+                                       aten::batch_norm         0.04%       4.141ms         6.84%     679.472ms     884.730us           768  
+                           aten::_batch_norm_impl_index         0.09%       8.992ms         6.80%     675.331ms     879.338us           768  
+                                aten::native_batch_norm         6.54%     649.731ms         6.69%     664.901ms     865.756us           768  
+    autograd::engine::evaluate_function: AddmmBackward0         0.30%      29.413ms         6.40%     635.478ms     481.423us          1320  
+                                         AddmmBackward0         0.24%      24.061ms         5.66%     562.798ms     426.362us          1320  
+                                               aten::mm         5.05%     501.644ms         5.06%     503.161ms     190.591us          2640  
+autograd::engine::evaluate_function: NativeBatchNorm...         0.15%      15.315ms         4.62%     459.260ms     597.995us           768  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 9.935s
+
+======================================================================

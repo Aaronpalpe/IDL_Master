@@ -1,0 +1,36 @@
+Using config: /home/yagoibarrolal/accelerate_scripts/config_ipexbase.yaml
+Inside container on  slurm-static-1-41  at  Wed Mar 11 19:37:35 UTC 2026
+COMMAND: accelerate launch --config_file /home/yagoibarrolal/accelerate_scripts/config_ipexbase.yaml /accelerate_scripts/mobilevit-train_cpu_ipex_stats.py
+Epoch 1, Loss: 2.2975
+Epoch 2, Loss: 2.1737
+Epoch 3, Loss: 1.9463
+
+Done. world_size=1 global_images=24 time=16.50s global_throughput=1.5 img/s
+
+======================================================================
+[RANK 0/1] device=cpu
+  local_images=24 local_throughput=1.5 img/s
+  CPU RSS: start=716.38 MiB  end=2.99 GiB  peak~=2.88 GiB
+----------------------------------------------------------------------
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+autograd::engine::evaluate_function: torch::autograd...         0.18%      20.602ms        25.59%        2.915s       3.470ms           840  
+torch::autograd::CppNode<torch_ipex::cpu::IPEXConvol...         0.05%       5.491ms        25.33%        2.884s       3.434ms           840  
+                            IPEXConvolutionOp::backward         0.08%       8.542ms        25.28%        2.879s       3.427ms           840  
+                       torch_ipex::convolution_backward        24.90%        2.836s        25.20%        2.870s       3.417ms           840  
+                        torch_ipex::convolution_forward         0.25%      28.911ms        24.39%        2.778s       1.630ms          1704  
+                                torch_ipex::ipex_linear         8.51%     969.101ms        17.16%        1.954s     740.284us          2640  
+autograd::engine::evaluate_function: torch::autograd...         0.27%      30.630ms        16.93%        1.928s       1.461ms          1320  
+torch::autograd::CppNode<torch_ipex::cpu::IPEXLinear...         0.06%       6.473ms        16.51%        1.881s       1.425ms          1320  
+                                 IPEXLinearOp::backward         0.13%      14.412ms        16.46%        1.874s       1.420ms          1320  
+                            torch_ipex::linear_backward        15.80%        1.800s        16.33%        1.860s       1.409ms          1320  
+                             IPEXConvolutionOp::forward         0.05%       5.287ms        11.96%        1.362s       1.621ms           840  
+                            IPEXConvolutionOp::_forward         0.03%       3.047ms        11.91%        1.356s       1.615ms           840  
+                   torch_ipex::convolution_forward_impl        11.55%        1.316s        11.86%        1.351s       1.608ms           840  
+                                  IPEXLinearOp::forward         0.06%       7.020ms         8.49%     967.433ms     732.904us          1320  
+                                              aten::bmm         8.45%     961.838ms         8.45%     962.664ms     742.797us          1296  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 11.389s
+
+======================================================================
