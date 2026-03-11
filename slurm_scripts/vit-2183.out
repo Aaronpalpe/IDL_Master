@@ -1,0 +1,55 @@
+NUM_PROCESSES=1
+CUDA_VISIBLE_DEVICES=0
+Single-GPU mode
+Wed Mar 11 11:39:33 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |
+| N/A   67C    P8             13W /   70W |       1MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Inside container on  slurm-static-1-43  at  Wed Mar 11 11:39:34 UTC 2026
+COMMAND: accelerate launch  --num_machines=1 --num_processes 1 /accelerate_scripts/vit-train_mgpu_stats2.py
+Epoch 1, Loss: 2.3134
+Epoch 2, Loss: 2.3047
+Epoch 3, Loss: 2.3058
+
+============================================================
+Done. world_size=1 global_images=12288 time=460.80s throughput=26.7 img/s
+[rank=0 host=slurm-static-1-43 local_rank=0]
+CPU RSS start : 539.57 MiB
+CPU RSS peak  : 1.61 GiB
+GPU mem alloc : 1.33 GiB
+GPU mem peak  : 4.60 GiB
+============================================================
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                  volta_sgemm_128x64_nt         0.00%       0.000us         0.00%       0.000us       0.000us      112.873s        24.84%      112.873s       4.082ms         27648  
+                                  volta_sgemm_128x64_nn         0.00%       0.000us         0.00%       0.000us       0.000us      112.690s        24.80%      112.690s       4.076ms         27648  
+                                 volta_sgemm_128x128_tn         0.00%       0.000us         0.00%       0.000us       0.000us       81.508s        17.94%       81.508s       8.844ms          9216  
+fmha_cutlassB_f32_aligned_64x64_k64_sm75(PyTorchMemE...         0.00%       0.000us         0.00%       0.000us       0.000us       47.072s        10.36%       47.072s      10.215ms          4608  
+                                  volta_sgemm_128x64_tn         0.00%       0.000us         0.00%       0.000us       0.000us       42.730s         9.40%       42.730s       2.318ms         18432  
+fmha_cutlassF_f32_aligned_64x64_rf_sm75(PyTorchMemEf...         0.00%       0.000us         0.00%       0.000us       0.000us       15.611s         3.44%       15.611s       3.388ms          4608  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        6.277s         1.38%        6.277s     227.029us         27648  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        4.224s         0.93%        4.224s     916.615us          4608  
+void at::native::reduce_kernel<128, 4, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us        4.033s         0.89%        4.033s     140.030us         28800  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        2.906s         0.64%        2.906s     630.605us          4608  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 439.676s
+Self CUDA time total: 454.408s
+
