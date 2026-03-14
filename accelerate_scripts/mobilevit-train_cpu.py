@@ -14,8 +14,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Synthetic dataset (CPU tensors) - MobileViT expects 256x256 images
-batch_size = 4
-num_samples = 128
+batch_size = 1
+num_samples = 8
 
 input_images = torch.rand((num_samples, 3, 256, 256), device="cpu")
 labels = torch.randint(0, 10, (num_samples,), device="cpu")

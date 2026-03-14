@@ -1,7 +1,0 @@
-No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
-2026-03-11 11:06:54,702 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-	`--num_cpu_threads_per_process` was set to `2` to improve out-of-box performance when training on CPUs
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-ERROR:2026-03-11 11:07:18 2127:2127 DeviceProperties.cpp:47] gpuGetDeviceCount failed with code 35

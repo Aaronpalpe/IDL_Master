@@ -1,8 +1,0 @@
-CPU MobileVit: 2367 (mobilevit-cpu-stats-2367.out) 
-CPU MovileVit: 2368 (mobilevit-cpu-ipex-stats-2368.out) 
-
-1 GPU MobileVIT: 2351
-1 GPU MobileVIT Gradient accumulation: 2352
-
-4 GPU MobileVIT: 2358
-4 GPU MobileVIT Gradient accumulation: 2357
